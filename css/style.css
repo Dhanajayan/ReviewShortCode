@@ -5,4 +5,10 @@
 	margin: 10px;
 	background-color: #555;
 	color: black;
+	transform: scale(1.0);
 }
+
+#review-div img {
+	height: 200px;
+}
+

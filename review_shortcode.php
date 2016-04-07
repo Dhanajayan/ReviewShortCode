@@ -38,15 +38,19 @@ function review_register_resources() {
 add_action( 'init' , 'review_register_resources');
 
 // Then we define our shortcode and enqueue the resources
-function review_show() {
+function review_show( $atts, $content = null) {
 
 	wp_enqueue_style("review-style");
 
-	$data = '<div id="review-div"><h1>Hello World</h1></div>';
+	//get the post thumbnail and return to variable
 
-	return $data;
+	$postval = get_the_post_thumbnail();
+	$reviewphoto = '<div id="review-div">' . $postval . '</div>';
+
+	return $reviewphoto;
 }
 
 // adding shortcode plugin begin here
 add_shortcode( 'reviewsec' , 'review_show');
 
+?>
