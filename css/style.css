@@ -1,14 +1,36 @@
 
 #review-div {
 	width: 100%;
-	padding: 30px;
+	padding: 0px;
 	margin: 10px;
 	background-color: #555;
 	color: black;
-	transform: scale(1.0);
+	overflow: hidden;
+	-o-box-shadow: 5px 5px 50px -10px;
+	-webkit-box-shadow: 5px 5px 50px -10px;
+	-moz-box-shadow: 5px 5px 50px -10px;
+	box-shadow: 5px 5px 50px -10px;
 }
 
 #review-div img {
 	height: 200px;
 }
 
+#review-thumb {
+	width: 75%;
+	float: left;
+}
+
+#review-react {
+	background-color: #F1BE0D;
+	width: 25%;
+	float: left;
+}
+
+#review-react img {
+	height: 90%;
+}
+#review-react h3 {
+	margin: 0px;
+	padding: 0px;
+}

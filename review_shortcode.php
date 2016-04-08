@@ -32,6 +32,10 @@ function review_register_resources() {
 		//wp_register_script("review-script", plugins_url("js/script.js"), __FILE__), array(), "1.0", false);
 
 	wp_register_style("review-style", plugins_url("css/style.css", __FILE__), array(), "1.0", "all");
+
+	//adding filter for add_buttons and register buttons
+/**	add_filter( "mce_external_plugins", "reviews_add_buttons");
+	add_filter( "mce_buttons", "reviews_register_buttons"); */
 }
 
 
@@ -42,15 +46,36 @@ function review_show( $atts, $content = null) {
 
 	wp_enqueue_style("review-style");
 
+	//extracting the shortcode_atts array
+	extract( shortcode_atts( array(
+			'rating'	=>	'#',
+			'reaction'	=>	'reaction',
+			), $atts) );
+
 	//get the post thumbnail and return to variable
 
+	$emoji = plugins_url('img/happy.png', __FILE__ );
 	$postval = get_the_post_thumbnail();
-	$reviewphoto = '<div id="review-div">' . $postval . '</div>';
+	$reviewphoto = '<div id="review-div"><div id="review-thumb">' . $postval . '</div><div id="review-react"><img src="'. $emoji . '"></img><h3>wow</h3></div></div>';
+
 
 	return $reviewphoto;
 }
 
 // adding shortcode plugin begin here
 add_shortcode( 'reviewsec' , 'review_show');
+
+
+/**function reviews_add_buttons( $plugin_array ) {
+	$plugin_array['reviews'] = plugins_url('reviews_shortcode_plugin.js', __FILE__);
+	return $plugin_array;
+}
+
+
+function reviews_register_buttons( $buttons ) {
+	array_push( $buttons, 'add reviews');
+	return $buttons;
+} */
+
 
 ?>
