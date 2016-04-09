@@ -24,27 +24,18 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-//wp_enqueue_style('source_style', plugin_dir_url( __FILE__ ) . 'css/style.css');
-
-//First we register our resources using the init hook
-
-function review_register_resources() {
-		//wp_register_script("review-script", plugins_url("js/script.js"), __FILE__), array(), "1.0", false);
-
-	wp_register_style("review-style", plugins_url("css/style.css", __FILE__), array(), "1.0", "all");
-
-	//adding filter for add_buttons and register buttons
-/**	add_filter( "mce_external_plugins", "reviews_add_buttons");
-	add_filter( "mce_buttons", "reviews_register_buttons"); */
-}
 
 
-add_action( 'init' , 'review_register_resources');
+//First we enqueue style sheet
+
+wp_enqueue_style('reviews_style', plugin_dir_url( __FILE__ ) . 'css/style.css');
+
+
 
 // Then we define our shortcode and enqueue the resources
-function review_show( $atts, $content = null) {
+function reviews_show( $atts, $content=null) {
 
-	wp_enqueue_style("review-style");
+	
 
 	//extracting the shortcode_atts array
 	extract( shortcode_atts( array(
@@ -52,30 +43,51 @@ function review_show( $atts, $content = null) {
 			'reaction'	=>	'reaction',
 			), $atts) );
 
+	
+	//It stores the emoji from plugin directory
+	switch( $reaction ) {
+		case 'wow':
+			$emoji = plugins_url('img/happy.png', __FILE__ );
+			break;
+
+		case 'meh':
+			$emoji = plugins_url('img/meh.png', __FILE__ );
+			break;
+
+		case 'bad':
+			$emoji = plugins_url('img/bad.png', __FILE__ );
+			break;
+	}
+	
+
 	//get the post thumbnail and return to variable
 
-	$emoji = plugins_url('img/happy.png', __FILE__ );
 	$postval = get_the_post_thumbnail();
-	$reviewphoto = '<div id="review-div"><div id="review-thumb">' . $postval . '</div><div id="review-react"><img src="'. $emoji . '"></img><h3>wow</h3></div></div>';
+	$reviewphoto = '<div id="review-div"><span style="position: absolute; top: -65px; left: 15px;color: rgb(224, 222, 75); font-size: 135px;">&#9733;</span>
+	<div id="rate"><h3>'.$rating.'</h3></span></div>	<div id="review-thumb">' . $postval . '</div><div id="review-react"><img src="'. $emoji . '"></img><h1>'. $reaction . '</h1></div>';
+	$reviewphoto .= '</div>';
 
 
 	return $reviewphoto;
 }
 
 // adding shortcode plugin begin here
-add_shortcode( 'reviewsec' , 'review_show');
+add_shortcode( 'reviews' , 'reviews_show');
 
+add_action( 'init', 'reviews_buttons');
+function reviews_buttons() {
+	add_filter( "mce_external_plugins", "reviews_add_buttons");
+	add_filter( 'mce_buttons', 'reviews_register_buttons');
+}
 
-/**function reviews_add_buttons( $plugin_array ) {
-	$plugin_array['reviews'] = plugins_url('reviews_shortcode_plugin.js', __FILE__);
+function reviews_add_buttons( $plugin_array ) {
+	$plugin_array['reviews'] = plugins_url('review_shortcode_plugin.js',__FILE__);
 	return $plugin_array;
 }
 
-
 function reviews_register_buttons( $buttons ) {
-	array_push( $buttons, 'add reviews');
+	array_push( $buttons, 'addreviews');
 	return $buttons;
-} */
-
+}
 
 ?>
