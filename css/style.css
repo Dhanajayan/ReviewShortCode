@@ -3,31 +3,94 @@
 	position: relative;
 	top: 0px;
 	left: 0px;
-	overflow: hidden;
 	-webkit-box-shadow: 5px 5px 30px -10px black;
 	-moz-box-shadow: 5px 5px 30px -10px black;
 	box-shadow: 5px 5px 30px -10px black;
-	height: 200px;
+	margin-top: 40px;
 }
 
 #rate {
 	position: absolute;
-	top: -10%;
-	left: 56px;
+	top: 0px;
+	left: 3px;
+	z-index: 6;
+	color: white;
+}
+
+#rate h1 {
+	margin: 0px;
+	font-size: 45px;
 }
 
 #review-react {
 	position: absolute;
 	right: 0px;
 	top: 0px;
-	background-color: black;
-	opacity: 0.8;
+	background-color: #D43421;
+	opacity: 0.9;
 	height: 100%;
 }
 
 #review-react h1 {
 	text-align: center;
 	color: white;
-	margin: 0px;
+	
+	font-size: 60px;
 }
 
+#review-react img {
+	border: 0px solid gray;
+	background-color: #2BCDED;
+	border-radius: 50%;
+	padding: 5px;
+	margin: 35px;
+	margin-bottom: 20px;
+	opacity: 1;
+}
+
+
+.hexagon {
+  position: absolute;
+  width: 100px; 
+  height: 57.74px;
+  background-color: #fb4d51;
+  margin: 28.87px 0;
+  box-shadow: 0 0 20px rgba(216,16,51,0.55);
+  left: -1.1em;
+  top: -1.6em;
+}
+
+.hexagon:before,
+.hexagon:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 70.71px;
+  height: 70.71px;
+  -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
+  transform: scaleY(0.5774) rotate(-45deg);
+  background-color: inherit;
+  left: 14.6447px;
+  box-shadow: 0 0 20px rgba(216,16,51,0.55);
+}
+
+.hexagon:before {
+  top: -35.3553px;
+}
+
+.hexagon:after {
+  bottom: -35.3553px;
+}
+
+/*cover up extra shadows*/
+.hexagon span {
+  display: block;
+  position: absolute;
+  top:0px;
+  left: 0;
+  width:100px;
+  height:57.7350px;
+  z-index: 2;
+  background: inherit;
+}

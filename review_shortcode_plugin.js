@@ -12,25 +12,12 @@
 					rreact = rreact.toLowerCase();
 
 					shortcode = '[reviews rating="' + rrate + '" reaction="' +rreact+ '"]';
-				}
-
-		//		if(rreact !== null) {
-
-				//rrate = rrate.toLowerCase();
-
-					//var rrate = prompt("rate?"), shortcode;
-					//var rreact = prompt("emoji?"), shortcode;
-
-					
-
-			//		shortcode = '[review]';
-
+				
 					ed.execCommand('mceInsertContent', 0, shortcode);
-				//}
-			/**	else
+				}else
 				{
 					alert("Invalid type");
-				} */
+				} 
 			});
 
 			ed.addButton('addreviews', {

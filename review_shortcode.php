@@ -47,7 +47,7 @@ function reviews_show( $atts, $content=null) {
 	//It stores the emoji from plugin directory
 	switch( $reaction ) {
 		case 'wow':
-			$emoji = plugins_url('img/happy.png', __FILE__ );
+			$emoji = plugins_url('img/wow.png', __FILE__ );
 			break;
 
 		case 'meh':
@@ -63,8 +63,8 @@ function reviews_show( $atts, $content=null) {
 	//get the post thumbnail and return to variable
 
 	$postval = get_the_post_thumbnail();
-	$reviewphoto = '<div id="review-div"><span style="position: absolute; top: -65px; left: 15px;color: rgb(224, 222, 75); font-size: 135px;">&#9733;</span>
-	<div id="rate"><h3>'.$rating.'</h3></span></div>	<div id="review-thumb">' . $postval . '</div><div id="review-react"><img src="'. $emoji . '"></img><h1>'. $reaction . '</h1></div>';
+	$reviewphoto = '<div id="review-div"><div class="hexagon"><span></span></div>
+	<div id="rate"><h1>'.$rating.'</h1></div>	<div id="review-thumb">' . $postval . '</div><div id="review-react"><img src="'. $emoji . '" style="z-index: 3;"></img><h1>'. $reaction . '</h1></div>';
 	$reviewphoto .= '</div>';
 
 
@@ -74,6 +74,8 @@ function reviews_show( $atts, $content=null) {
 // adding shortcode plugin begin here
 add_shortcode( 'reviews' , 'reviews_show');
 
+
+//registering and adding tinyMCE
 add_action( 'init', 'reviews_buttons');
 function reviews_buttons() {
 	add_filter( "mce_external_plugins", "reviews_add_buttons");
