@@ -8,7 +8,7 @@
 				var rrate = prompt("what do you rating ?"),shortcode;
 
 				if( rrate !== null){
-					var rreact = prompt("what is your reaction ?"),shortcode;
+					var rreact = prompt("what is your reaction? wow,bad,meh."),shortcode;
 					rreact = rreact.toLowerCase();
 
 					shortcode = '[reviews rating="' + rrate + '" reaction="' +rreact+ '"]';
