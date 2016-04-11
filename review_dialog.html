@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Disable browser caching of dialog window-->
+		<meta http-equiv="cache-control" content="no-cache"/>
+		<meta http-equiv="expires" content="0"/>
+		<meta http-equiv="pragma" content="no-cache"/>
+
+		<style type="text/css">
+
+			body {
+				font-family: sans-serif;
+				font-size: 1.1em;
+				background-color: #F1F1F1;
+				color: #222;
+			}
+
+			#reviews_php_version {
+				font-size: 1.3em;
+			}
+
+			input[type="text"] {
+				padding: 10px;
+				margin: 15px;
+				width: 300px;
+				font-size: 24px;
+			}
+
+			input[type="submit"] {
+				padding: 10px;
+				font-size: 1.2em;
+				width: 320px;
+				margin-left: 15px;
+			}
+			label {
+				margin:15px;
+			}
+			#reviews_dialog_wrapper {
+				margin: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="reviews_dialog_wrapper">
+		<!--	<p id="reviews_php_version"> No data yet. Will be provided by javascript below.</p>	-->
+
+			<form>
+				<label for="dumb_shortcode_text">Enter Review rating</label><br/>
+
+				<input type="text" name="reviews_shortcode_text"/><br/>
+					<br/>
+				<label for="dumb_shortcode_text1">Enter Review reaction. wow/bad/meh?</label><br/>
+				<input type="text" name="reviews_shortcode_text1"/><br/><br/>
+
+				<input type="submit" value="Add" align="center"/>
+			</form>
+		</div>
+		
+		<script type="text/javascript">
+
+			var passed_arguments = top.tinymce.activeEditor.windowManager.getParams();
+
+			$ = passed_arguments.jquery;
+			var jq_context = document.getElementsByTagName("body")[0];
+
+			$("form", jq_context).submit(function(event) {
+					event.preventDefault();
+
+					var input_text = $("input[name='reviews_shortcode_text']",jq_context).val();
+
+					var input_text1 = $("input[name='reviews_shortcode_text1']", jq_context).val();
+
+
+					var shortcode = '[reviews';
+
+					if( input_text != "" && input_text1 !=  "") {
+						shortcode += ' rating="' + input_text + '"'+' reaction="' +input_text1 + '"';
+					}
+
+					shortcode += ']';
+
+					passed_arguments.editor.selection.setContent(shortcode);
+					passed_arguments.editor.windowManager.close();
+			});
+
+		//	$("#reviews_php_version", jq_context).text("PHP Version: " + passed_arguments.php_version); 
+			</script>
+		</body>
+</html>	
+

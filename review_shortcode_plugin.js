@@ -1,9 +1,14 @@
-(function() {
+(function($) {
+
+	var passed_data = reviews_data;
+	var php_version = passed_data.php_version;
+
+
 	tinymce.create('tinymce.plugins.Reviews', {
 
 		init : function(ed, url) {
 
-			ed.addCommand('addreviews', function() {
+		/**	ed.addCommand('addreviews', function() {
 
 				var rrate = prompt("what do you rating ?"),shortcode;
 
@@ -18,8 +23,30 @@
 				{
 					alert("Invalid type");
 				} 
+			}); */
+
+			ed.addCommand( 'addreviews', function() {
+
+				ed.windowManager.open(
+
+				{
+					title: "Reviews Creator",
+					file: url + '/review_dialog.html',
+					width: 500,
+					height: 600,
+					inline: 1
+				},
+
+				{
+					editor: ed,
+					jquery: $,
+					php_version: php_version
+				}
+
+				);
 			});
 
+			
 			ed.addButton('addreviews', {
 				title : 'Add Reviews',
 				cmd : 'addreviews',
@@ -43,4 +70,4 @@
 
 		tinymce.PluginManager.add('reviews', tinymce.plugins.Reviews);
 
-})();
+})(jQuery);

@@ -74,6 +74,11 @@ function reviews_show( $atts, $content=null) {
 // adding shortcode plugin begin here
 add_shortcode( 'reviews' , 'reviews_show');
 
+// Enqueue JQuery
+add_action( 'admin_enqueue_scripts', 'reviews_enqueue_admin_scripts' );
+function reviews_enqueue_admin_scripts() {
+	wp_enqueue_script( 'jquery' );
+}
 
 //registering and adding tinyMCE
 add_action( 'init', 'reviews_buttons');
@@ -83,13 +88,41 @@ function reviews_buttons() {
 }
 
 function reviews_add_buttons( $plugin_array ) {
-	$plugin_array['reviews'] = plugins_url('review_shortcode_plugin.js',__FILE__);
+
+	global $current_screen;
+
+	$type = $current_screen->post_type;
+
+	if( is_admin() && ( $type == 'post' || $type == 'page' ) ) {
+		$plugin_array['reviews'] = plugins_url('review_shortcode_plugin.js',__FILE__);
+	}
+	
 	return $plugin_array;
 }
 
 function reviews_register_buttons( $buttons ) {
-	array_push( $buttons, 'addreviews');
+
+	global $current_screen;
+
+	$type = $current_screen->post_type;
+
+	if( is_admin() && ( $type == 'post' || $type == 'page' ) ) {
+		array_push( $buttons, 'addreviews');
+	}
+	
 	return $buttons;
 }
 
-?>
+// Save Data to pass to TinyMCE
+add_action( 'admin_head', 'reviews_save_tinymce_data');
+
+function reviews_save_tinymce_data() {
+	?>
+
+	<script type="text/javascript">
+		var reviews_data = {
+			'php_version': '<?php echo phpversion(); ?>'
+		};
+	</script>
+	<?php
+}
